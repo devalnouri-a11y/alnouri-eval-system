@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>نظام تقييم المشاريع وقياس الأثر | جمعية الشيخ عبد الله النوري الخيرية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root, [data-theme="light"] {
+  --color-bg: #f7f6f2;
+  --color-surface: #f9f8f5;
+  --color-surface-2: #fbfbf9;
+  --color-surface-offset: #f3f0ec;
+  --color-surface-offset-2: #edeae5;
+  --color-divider: #dcd9d5;
+  --color-border: #d4d1ca;
+  --color-text: #28251d;
+  --color-text-muted: #7a7974;
+  --color-text-faint: #bab9b4;
+  --color-text-inverse: #f9f8f4;
+  --color-primary: #01696f;
+  --color-primary-hover: #0c4e54;
+  --color-primary-active: #0f3638;
+  --color-primary-highlight: #cedcd8;
+  --color-success: #437a22;
+  --color-success-hover: #2e5c10;
+  --color-success-highlight: #d4dfcc;
+  --color-warning: #964219;
+  --color-warning-highlight: #ddcfc6;
+  --color-error: #a12c7b;
+  --color-error-highlight: #e0ced7;
+  --color-gold: #d19900;
+  --color-gold-highlight: #e9e0c6;
+  --color-blue: #006494;
+  --color-blue-highlight: #c6d8e4;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px oklch(0.2 0.01 80 / 0.06);
+  --shadow-md: 0 4px 12px oklch(0.2 0.01 80 / 0.08);
+  --shadow-lg: 0 12px 32px oklch(0.2 0.01 80 / 0.12);
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
+  --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
+  --space-12: 3rem; --space-16: 4rem; --space-20: 5rem;
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg: clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl: clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --font-body: 'IBM Plex Sans Arabic', 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme="dark"] {
+  --color-bg: #171614; --color-surface: #1c1b19; --color-surface-2: #201f1d;
+  --color-surface-offset: #1d1c1a; --color-surface-offset-2: #22211f;
+  --color-surface-dynamic: #2d2c2a; --color-divider: #262523; --color-border: #393836;
+  --color-text: #cdccca; --color-text-muted: #797876; --color-text-faint: #5a5957;
+  --color-text-inverse: #2b2a28; --color-primary: #4f98a3; --color-primary-hover: #227f8b;
+  --color-primary-active: #1a626b; --color-primary-highlight: #313b3b;
+  --color-success: #6daa45; --color-success-hover: #4d8f25; --color-success-highlight: #3a4435;
+  --color-warning: #bb653b; --color-warning-highlight: #564942;
+  --color-error: #d163a7; --color-error-highlight: #4c3d46;
+  --color-gold: #e8af34; --color-gold-highlight: #4d4332;
+  --color-blue: #5591c7; --color-blue-highlight: #3a4550;
+  --shadow-sm: 0 1px 2px oklch(0 0 0 / 0.2); --shadow-md: 0 4px 12px oklch(0 0 0 / 0.3);
+  --shadow-lg: 0 12px 32px oklch(0 0 0 / 0.4);
+}
+
+/* ===== BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--space-16); -webkit-font-smoothing: antialiased; }
+body { min-height: 100dvh; font-family: var(--font-body); font-size: var(--text-base); color: var(--color-text); background: var(--color-bg); line-height: 1.6; }
+img, video { display: block; max-width: 100%; height: auto; }
+input, button, textarea, select { font: inherit; color: inherit; }
+h1,h2,h3,h4 { text-wrap: balance; line-height: 1.3; }
+button { cursor: pointer; background: none; border: none; }
+:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 3px; border-radius: var(--radius-sm); }
+
+/* ===== HEADER ===== */
+.header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-divider);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+.header-inner {
+  max-width: 1100px; margin: 0 auto;
+  padding: var(--space-3) var(--space-6);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+}
+.logo-group { display: flex; align-items: center; gap: var(--space-3); }
+.logo-svg { width: 44px; height: 44px; flex-shrink: 0; }
+.org-name { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); line-height: 1.3; }
+.org-sub { font-size: var(--text-xs); color: var(--color-text-muted); }
+.header-actions { display: flex; align-items: center; gap: var(--space-2); }
+.btn-icon { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-md); color: var(--color-text-muted); transition: background var(--transition), color var(--transition); }
+.btn-icon:hover { background: var(--color-surface-offset); color: var(--color-text); }
+
+/* ===== NAV TABS ===== */
+.nav-tabs { background: var(--color-surface); border-bottom: 1px solid var(--color-divider); overflow-x: auto; }
+.nav-tabs-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--space-6); display: flex; gap: 0; }
+.nav-tab { padding: var(--space-3) var(--space-5); font-size: var(--text-sm); font-weight: 500; color: var(--color-text-muted); border-bottom: 2px solid transparent; transition: color var(--transition), border-color var(--transition); white-space: nowrap; cursor: pointer; }
+.nav-tab:hover { color: var(--color-text); }
+.nav-tab.active { color: var(--color-primary); border-bottom-color: var(--color-primary); }
+
+/* ===== MAIN LAYOUT ===== */
+.main { max-width: 1100px; margin: 0 auto; padding: var(--space-8) var(--space-6); }
+
+/* ===== PAGE SECTION ===== */
+.page-section { display: none; }
+.page-section.active { display: block; }
+
+/* ===== FORM CARD ===== */
+.form-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.section-header {
+  display: flex; align-items: center; gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+}
+.section-icon {
+  width: 40px; height: 40px; border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem; flex-shrink: 0;
+}
+.icon-blue { background: var(--color-blue-highlight); }
+.icon-green { background: var(--color-success-highlight); }
+.icon-gold { background: var(--color-gold-highlight); }
+.icon-teal { background: var(--color-primary-highlight); }
+.icon-warning { background: var(--color-warning-highlight); }
+.icon-purple { background: var(--color-error-highlight); }
+
+.section-title { font-size: var(--text-lg); font-weight: 700; color: var(--color-text); }
+.section-desc { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+
+/* ===== FORM GRID ===== */
+.form-grid { display: grid; gap: var(--space-5); }
+.form-grid.cols-2 { grid-template-columns: 1fr 1fr; }
+.form-grid.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+.form-grid.cols-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+@media (max-width: 768px) {
+  .form-grid.cols-2, .form-grid.cols-3, .form-grid.cols-4 { grid-template-columns: 1fr; }
+}
+
+.field { display: flex; flex-direction: column; gap: var(--space-1); }
+.field-label { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); }
+.field-label span.req { color: var(--color-error); margin-right: 2px; }
+.field-hint { font-size: var(--text-xs); color: var(--color-text-muted); }
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  color: var(--color-text);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.15);
+}
+.form-textarea { resize: vertical; min-height: 100px; }
+.form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237a7974' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: left 12px center; }
+
+/* ===== RATING STARS ===== */
+.rating-grid { display: grid; gap: var(--space-4); }
+.rating-row {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.rating-label { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); font-weight: 500; flex: 1; }
+.rating-label .emoji { font-size: 1.1rem; }
+.rating-stars { display: flex; gap: var(--space-1); }
+.star-btn {
+  width: 36px; height: 36px; border-radius: var(--radius-sm);
+  background: var(--color-surface-offset);
+  border: 1px solid var(--color-border);
+  font-size: 0.85rem; font-weight: 700;
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+  display: flex; align-items: center; justify-content: center;
+}
+.star-btn:hover, .star-btn.active {
+  background: var(--color-primary); border-color: var(--color-primary);
+  color: white; box-shadow: var(--shadow-sm);
+}
+.rating-score {
+  width: 42px; height: 42px; border-radius: var(--radius-md);
+  background: var(--color-primary-highlight);
+  color: var(--color-primary); font-weight: 700; font-size: var(--text-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); flex-shrink: 0;
+}
+
+/* ===== INDICATORS ===== */
+.indicator-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+@media (max-width: 600px) { .indicator-grid { grid-template-columns: 1fr; } }
+.indicator-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+.indicator-label { font-size: var(--text-xs); font-weight: 600; color: var(--color-text-muted); margin-bottom: var(--space-2); }
+.indicator-input {
+  width: 100%; padding: var(--space-2) var(--space-3);
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); font-size: var(--text-base); font-weight: 700;
+  color: var(--color-text); font-family: var(--font-mono);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.indicator-input:focus {
+  outline: none; border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px oklch(from var(--color-primary) l c h / 0.15);
+}
+
+/* ===== FILE UPLOAD SECTION ===== */
+.upload-section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: var(--space-4);
+}
+.upload-category { margin-bottom: var(--space-6); }
+.upload-category-title {
+  font-size: var(--text-sm); font-weight: 700; color: var(--color-text);
+  margin-bottom: var(--space-3);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.upload-badge {
+  font-size: var(--text-xs); padding: 2px var(--space-2);
+  border-radius: var(--radius-full); font-weight: 600;
+  background: var(--color-primary-highlight); color: var(--color-primary);
+}
+.drop-zone {
+  border: 2px dashed var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition);
+  background: var(--color-surface-2);
+  position: relative;
+}
+.drop-zone:hover, .drop-zone.dragover {
+  border-color: var(--color-primary);
+  background: color-mix(in oklch, var(--color-primary) 5%, var(--color-surface-2));
+}
+.drop-zone input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.drop-icon { font-size: 2.5rem; margin-bottom: var(--space-3); display: block; }
+.drop-title { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); margin-bottom: var(--space-1); }
+.drop-hint { font-size: var(--text-xs); color: var(--color-text-muted); }
+.drop-formats { margin-top: var(--space-2); display: flex; gap: var(--space-2); justify-content: center; flex-wrap: wrap; }
+.format-tag {
+  font-size: var(--text-xs); padding: 2px 8px;
+  background: var(--color-surface-offset); border: 1px solid var(--color-border);
+  border-radius: var(--radius-full); color: var(--color-text-muted); font-family: var(--font-mono);
+}
+
+/* ===== UPLOADED FILES GRID ===== */
+.files-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space-3); margin-top: var(--space-4);
+}
+.file-item {
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: var(--space-3);
+  display: flex; flex-direction: column; gap: var(--space-2); position: relative;
+  transition: box-shadow var(--transition);
+}
+.file-item:hover { box-shadow: var(--shadow-md); }
+.file-preview {
+  width: 100%; aspect-ratio: 4/3; object-fit: cover;
+  border-radius: var(--radius-md); background: var(--color-surface-offset);
+}
+.file-preview-icon {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--color-surface-offset);
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 2rem;
+}
+.file-name {
+  font-size: var(--text-xs); color: var(--color-text); font-weight: 500;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.file-size { font-size: var(--text-xs); color: var(--color-text-muted); font-family: var(--font-mono); }
+.file-remove {
+  position: absolute; top: var(--space-2); left: var(--space-2);
+  width: 24px; height: 24px; border-radius: var(--radius-full);
+  background: var(--color-error); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700; opacity: 0;
+  transition: opacity var(--transition);
+}
+.file-item:hover .file-remove { opacity: 1; }
+.upload-stats {
+  display: flex; gap: var(--space-4); margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface-offset);
+  border-radius: var(--radius-lg);
+  font-size: var(--text-xs);
+}
+.upload-stat { display: flex; flex-direction: column; gap: 2px; }
+.upload-stat-value { font-weight: 700; color: var(--color-primary); font-family: var(--font-mono); font-size: var(--text-sm); }
+.upload-stat-label { color: var(--color-text-muted); }
+
+/* ===== PROGRESS BAR ===== */
+.upload-progress { margin-top: var(--space-3); }
+.progress-bar-outer { height: 6px; background: var(--color-surface-offset); border-radius: var(--radius-full); overflow: hidden; }
+.progress-bar-inner { height: 100%; background: var(--color-primary); border-radius: var(--radius-full); transition: width 0.4s ease; }
+
+/* ===== BUTTONS ===== */
+.btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-2) var(--space-5); border-radius: var(--radius-md); font-size: var(--text-sm); font-weight: 600; transition: all var(--transition); cursor: pointer; border: none; white-space: nowrap; }
+.btn-primary { background: var(--color-primary); color: white; }
+.btn-primary:hover { background: var(--color-primary-hover); box-shadow: var(--shadow-md); }
+.btn-secondary { background: var(--color-surface-offset); color: var(--color-text); border: 1px solid var(--color-border); }
+.btn-secondary:hover { background: var(--color-surface-offset-2); }
+.btn-success { background: var(--color-success); color: white; }
+.btn-success:hover { background: var(--color-success-hover); }
+.btn-danger { background: var(--color-error); color: white; }
+.btn-lg { padding: var(--space-3) var(--space-8); font-size: var(--text-base); border-radius: var(--radius-lg); }
+.btn-group { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
+
+/* ===== SCORE CARD ===== */
+.score-display {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  border-radius: var(--radius-xl); padding: var(--space-8);
+  color: white; text-align: center; margin-bottom: var(--space-6);
+}
+.score-number { font-size: 4rem; font-weight: 800; line-height: 1; font-family: var(--font-mono); }
+.score-label { font-size: var(--text-sm); opacity: 0.85; margin-top: var(--space-2); }
+.score-grade { font-size: var(--text-xl); font-weight: 700; margin-top: var(--space-3); }
+.score-breakdown { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); margin-top: var(--space-6); }
+@media (max-width: 600px) { .score-breakdown { grid-template-columns: 1fr 1fr; } }
+.score-item { background: rgba(255,255,255,0.15); border-radius: var(--radius-lg); padding: var(--space-3); text-align: center; }
+.score-item-val { font-size: var(--text-lg); font-weight: 700; font-family: var(--font-mono); }
+.score-item-lbl { font-size: var(--text-xs); opacity: 0.8; margin-top: 2px; }
+
+/* ===== ALERTS ===== */
+.alert { padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); font-size: var(--text-sm); margin-bottom: var(--space-4); display: flex; align-items: center; gap: var(--space-2); }
+.alert-success { background: var(--color-success-highlight); color: var(--color-success); border: 1px solid oklch(from var(--color-success) l c h / 0.3); }
+.alert-warning { background: var(--color-warning-highlight); color: var(--color-warning); border: 1px solid oklch(from var(--color-warning) l c h / 0.3); }
+.alert-error { background: var(--color-error-highlight); color: var(--color-error); border: 1px solid oklch(from var(--color-error) l c h / 0.3); }
+.alert { display: none; }
+.alert.show { display: flex; }
+
+/* ===== SEPARATOR ===== */
+.section-sep { border: none; border-top: 1px solid var(--color-divider); margin: var(--space-6) 0; }
+
+/* ===== FOOTER ===== */
+footer { text-align: center; padding: var(--space-8) var(--space-4); color: var(--color-text-muted); font-size: var(--text-xs); border-top: 1px solid var(--color-divider); margin-top: var(--space-12); }
+
+/* ===== TOOLTIP ===== */
+.tooltip { position: relative; }
+.tooltip-text { position: absolute; bottom: calc(100% + 6px); right: 50%; transform: translateX(50%); background: var(--color-text); color: var(--color-text-inverse); padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm); font-size: var(--text-xs); white-space: nowrap; pointer-events: none; opacity: 0; transition: opacity var(--transition); z-index: 10; }
+.tooltip:hover .tooltip-text { opacity: 1; }
+
+/* ===== DOCS SECTION ===== */
+.docs-block { background: var(--color-surface-2); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: var(--space-6); margin-bottom: var(--space-4); }
+.docs-block h3 { font-size: var(--text-base); font-weight: 700; margin-bottom: var(--space-3); }
+.docs-block p, .docs-block li { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.8; }
+.docs-block ul { padding-right: var(--space-5); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo-group">
+      <svg class="logo-svg" viewBox="0 0 44 44" fill="none" aria-label="شعار الجمعية">
+        <rect width="44" height="44" rx="10" fill="var(--color-primary)"/>
+        <path d="M22 8C14.268 8 8 14.268 8 22s6.268 14 14 14 14-6.268 14-14S29.732 8 22 8z" stroke="white" stroke-width="1.5" fill="none"/>
+        <path d="M15 22c0-3.866 3.134-7 7-7s7 3.134 7 7-3.134 7-7 7-7-3.134-7-7z" fill="rgba(255,255,255,0.2)"/>
+        <path d="M22 16v6l4 2" stroke="white" stroke-width="2" stroke-linecap="round"/>
+        <path d="M12 28c2-1.5 5-2.5 10-2.5s8 1 10 2.5" stroke="rgba(255,255,255,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div>
+        <div class="org-name">جمعية الشيخ عبد الله النوري الخيرية</div>
+        <div class="org-sub">نظام تقييم المشاريع وقياس الأثر | OECD-DAC / MEAL</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-icon tooltip" data-theme-toggle aria-label="تبديل المظهر">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+        <span class="tooltip-text">تبديل المظهر</span>
+      </button>
+      <button class="btn btn-primary" onclick="saveProject()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        حفظ المشروع
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-tabs" aria-label="أقسام النظام">
+  <div class="nav-tabs-inner">
+    <button class="nav-tab active" onclick="switchTab(this,'tab-form')">📋 نموذج التقييم</button>
+    <button class="nav-tab" onclick="switchTab(this,'tab-uploads')">📸 الصور والمستندات</button>
+    <button class="nav-tab" onclick="switchTab(this,'tab-registry')">🗂 سجل المشاريع</button>
+    <button class="nav-tab" onclick="switchTab(this,'tab-water')">💧 استبيان المياه</button>
+    <button class="nav-tab" onclick="switchTab(this,'tab-guide')">📖 دليل الاستخدام</button>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- ============================================================ -->
+<!-- TAB 1: EVALUATION FORM -->
+<!-- ============================================================ -->
+<div id="tab-form" class="page-section active">
+
+  <div id="alert-save" class="alert alert-success">✅ تم حفظ بيانات المشروع بنجاح!</div>
+  <div id="alert-reset" class="alert alert-warning">🔄 تم إعادة تعيين النموذج.</div>
+
+  <!-- SECTION 1: General Info -->
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📋</div>
+      <div>
+        <div class="section-title">المعلومات العامة للمشروع</div>
+        <div class="section-desc">البيانات التعريفية الأساسية</div>
+      </div>
+    </div>
+    <div class="form-grid cols-2">
+      <div class="field">
+        <label class="field-label" for="proj-name">اسم المشروع <span class="req">*</span></label>
+        <input id="proj-name" class="form-input" type="text" placeholder="أدخل اسم المشروع">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-num">رقم المشروع</label>
+        <input id="proj-num" class="form-input" type="text" placeholder="مثال: PROJ-2024-001">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-type">نوع المشروع</label>
+        <select id="proj-type" class="form-select">
+          <option value="">-- اختر --</option>
+          <option value="water">💧 مياه / آبار</option>
+          <option value="mosque">🕌 مسجد</option>
+          <option value="school">🏫 مدرسة</option>
+          <option value="health">🏥 مركز صحي</option>
+          <option value="livelihood">🌱 سبل عيش</option>
+          <option value="other">📦 أخرى</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-country">الدولة</label>
+        <input id="proj-country" class="form-input" type="text" placeholder="الدولة">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-region">المحافظة / المنطقة</label>
+        <input id="proj-region" class="form-input" type="text" placeholder="المنطقة">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-implementer">الجهة المنفذة</label>
+        <input id="proj-implementer" class="form-input" type="text" placeholder="الجهة المنفذة">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-budget">الميزانية (USD)</label>
+        <input id="proj-budget" class="form-input" type="number" placeholder="0" min="0">
+      </div>
+      <div class="field">
+        <label class="field-label" for="proj-date">تاريخ التقييم</label>
+        <input id="proj-date" class="form-input" type="date">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: OECD-DAC Ratings -->
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-gold">⭐</div>
+      <div>
+        <div class="section-title">معايير التقييم (OECD-DAC)</div>
+        <div class="section-desc">قيّم كل معيار من 1 (ضعيف) إلى 5 (ممتاز)</div>
+      </div>
+    </div>
+    <div class="rating-grid">
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">🎯</span> الملاءمة — مدى توافق المشروع مع الاحتياجات</div>
+        <div class="rating-stars" data-criterion="relevance">
+          <button class="star-btn" onclick="setRating('relevance',1)">1</button>
+          <button class="star-btn" onclick="setRating('relevance',2)">2</button>
+          <button class="star-btn" onclick="setRating('relevance',3)">3</button>
+          <button class="star-btn" onclick="setRating('relevance',4)">4</button>
+          <button class="star-btn" onclick="setRating('relevance',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-relevance">—</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">⚡</span> الفعالية — تحقيق الأهداف والنتائج</div>
+        <div class="rating-stars" data-criterion="effectiveness">
+          <button class="star-btn" onclick="setRating('effectiveness',1)">1</button>
+          <button class="star-btn" onclick="setRating('effectiveness',2)">2</button>
+          <button class="star-btn" onclick="setRating('effectiveness',3)">3</button>
+          <button class="star-btn" onclick="setRating('effectiveness',4)">4</button>
+          <button class="star-btn" onclick="setRating('effectiveness',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-effectiveness">—</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">💰</span> الكفاءة — استخدام الموارد بكفاءة</div>
+        <div class="rating-stars" data-criterion="efficiency">
+          <button class="star-btn" onclick="setRating('efficiency',1)">1</button>
+          <button class="star-btn" onclick="setRating('efficiency',2)">2</button>
+          <button class="star-btn" onclick="setRating('efficiency',3)">3</button>
+          <button class="star-btn" onclick="setRating('efficiency',4)">4</button>
+          <button class="star-btn" onclick="setRating('efficiency',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-efficiency">—</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">🌍</span> الأثر — التغيرات الإيجابية الناتجة</div>
+        <div class="rating-stars" data-criterion="impact">
+          <button class="star-btn" onclick="setRating('impact',1)">1</button>
+          <button class="star-btn" onclick="setRating('impact',2)">2</button>
+          <button class="star-btn" onclick="setRating('impact',3)">3</button>
+          <button class="star-btn" onclick="setRating('impact',4)">4</button>
+          <button class="star-btn" onclick="setRating('impact',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-impact">—</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">♻️</span> الاستدامة — استمرارية الفوائد</div>
+        <div class="rating-stars" data-criterion="sustainability">
+          <button class="star-btn" onclick="setRating('sustainability',1)">1</button>
+          <button class="star-btn" onclick="setRating('sustainability',2)">2</button>
+          <button class="star-btn" onclick="setRating('sustainability',3)">3</button>
+          <button class="star-btn" onclick="setRating('sustainability',4)">4</button>
+          <button class="star-btn" onclick="setRating('sustainability',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-sustainability">—</div>
+      </div>
+      <div class="rating-row">
+        <div class="rating-label"><span class="emoji">🤝</span> التنسيق — جودة الشراكات والتعاون</div>
+        <div class="rating-stars" data-criterion="coordination">
+          <button class="star-btn" onclick="setRating('coordination',1)">1</button>
+          <button class="star-btn" onclick="setRating('coordination',2)">2</button>
+          <button class="star-btn" onclick="setRating('coordination',3)">3</button>
+          <button class="star-btn" onclick="setRating('coordination',4)">4</button>
+          <button class="star-btn" onclick="setRating('coordination',5)">5</button>
+        </div>
+        <div class="rating-score" id="score-coordination">—</div>
+      </div>
+    </div>
+    <div style="margin-top:var(--space-4);text-align:center">
+      <button class="btn btn-primary" onclick="calculateScore()">
+        📊 احسب درجة الأثر الإجمالية
+      </button>
+    </div>
+    <div id="score-result" style="display:none;margin-top:var(--space-6)">
+      <div class="score-display">
+        <div class="score-number" id="total-score">0</div>
+        <div class="score-label">الدرجة الإجمالية من 5.0</div>
+        <div class="score-grade" id="grade-text">—</div>
+        <div class="score-breakdown" id="score-breakdown"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Impact Indicators -->
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📊</div>
+      <div>
+        <div class="section-title">مؤشرات قياس الأثر</div>
+        <div class="section-desc">البيانات الكمية لقياس الأثر الميداني</div>
+      </div>
+    </div>
+    <div class="indicator-grid">
+      <div class="indicator-card">
+        <div class="indicator-label">👥 عدد المستفيدين المباشرين</div>
+        <input id="ind-direct" class="indicator-input" type="number" value="0" min="0">
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-label">👤 عدد المستفيدين غير المباشرين</div>
+        <input id="ind-indirect" class="indicator-input" type="number" value="0" min="0">
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-label">♀️ نسبة المستفيدات (%)</div>
+        <input id="ind-women" class="indicator-input" type="number" value="0" min="0" max="100">
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-label">😊 مؤشر رضا المستفيدين (1-5)</div>
+        <input id="ind-satisfaction" class="indicator-input" type="number" value="3" min="1" max="5" step="0.1">
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-label">💼 فرص عمل تم توفيرها</div>
+        <input id="ind-jobs" class="indicator-input" type="number" value="0" min="0">
+      </div>
+      <div class="indicator-card">
+        <div class="indicator-label">📈 تحسن مستوى المعيشة (1-5)</div>
+        <input id="ind-living" class="indicator-input" type="number" value="2.5" min="1" max="5" step="0.1">
+      </div>
+    </div>
+    <div class="form-grid" style="margin-top:var(--space-5)">
+      <div class="field">
+        <label class="field-label" for="change-stories">📝 قصص التغيير والأثر المجتمعي</label>
+        <textarea id="change-stories" class="form-textarea" rows="4" placeholder="اذكر قصص النجاح والتأثير الإيجابي للمشروع..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: Recommendations -->
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-warning">💡</div>
+      <div>
+        <div class="section-title">التوصيات والملاحظات</div>
+        <div class="section-desc">تحليل نقاط القوة والتحديات والمقترحات</div>
+      </div>
+    </div>
+    <div class="form-grid cols-2">
+      <div class="field">
+        <label class="field-label" for="strengths">💪 نقاط القوة</label>
+        <textarea id="strengths" class="form-textarea" placeholder="أبرز نقاط القوة في المشروع"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="challenges">⚠️ التحديات</label>
+        <textarea id="challenges" class="form-textarea" placeholder="التحديات التي واجهت المشروع"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="recommendations">🔭 التوصيات المستقبلية</label>
+        <textarea id="recommendations" class="form-textarea" placeholder="توصيات للتحسين والتطوير"></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="overall-grade">🏆 التصنيف العام</label>
+        <select id="overall-grade" class="form-select">
+          <option value="A+">A+ (متميز جداً)</option>
+          <option value="A">A (متميز)</option>
+          <option value="B">B (جيد)</option>
+          <option value="C">C (مقبول)</option>
+          <option value="D">D (ضعيف)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORM ACTIONS -->
+  <div class="form-card" style="padding:var(--space-6)">
+    <div class="btn-group" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="resetForm()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.7"/></svg>
+        إعادة تعيين
+      </button>
+      <button class="btn btn-success btn-lg" onclick="saveProject()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        💾 حفظ وتسجيل المشروع
+      </button>
+    </div>
+  </div>
+
+</div><!-- end tab-form -->
+
+<!-- ============================================================ -->
+<!-- TAB 2: UPLOADS - PHOTOS & DOCUMENTS -->
+<!-- ============================================================ -->
+<div id="tab-uploads" class="page-section">
+
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📸</div>
+      <div>
+        <div class="section-title">رفع الصور ومكونات المشروع</div>
+        <div class="section-desc">أضف الصور والمستندات والتقارير الخاصة بالمشروع الحالي</div>
+      </div>
+    </div>
+
+    <!-- Upload Stats -->
+    <div class="upload-stats" id="upload-stats">
+      <div class="upload-stat"><span class="upload-stat-value" id="stat-total-files">0</span><span class="upload-stat-label">إجمالي الملفات</span></div>
+      <div class="upload-stat"><span class="upload-stat-value" id="stat-images">0</span><span class="upload-stat-label">صور</span></div>
+      <div class="upload-stat"><span class="upload-stat-value" id="stat-docs">0</span><span class="upload-stat-label">مستندات</span></div>
+      <div class="upload-stat"><span class="upload-stat-value" id="stat-size">0 KB</span><span class="upload-stat-label">الحجم الإجمالي</span></div>
+    </div>
+
+    <hr class="section-sep">
+
+    <!-- CATEGORY 1: Before Photos -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        📷 صور ما قبل التنفيذ
+        <span class="upload-badge" id="badge-before">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-before" ondragover="handleDragOver(event,'before')" ondragleave="handleDragLeave(event,'before')" ondrop="handleDrop(event,'before')">
+        <input type="file" id="file-before" accept="image/*" multiple onchange="handleFileSelect(this,'before')">
+        <span class="drop-icon">🏚️</span>
+        <div class="drop-title">صور الموقع قبل بدء المشروع</div>
+        <div class="drop-hint">اسحب الصور هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">JPG</span>
+          <span class="format-tag">PNG</span>
+          <span class="format-tag">WEBP</span>
+          <span class="format-tag">HEIC</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-before"></div>
+    </div>
+
+    <!-- CATEGORY 2: During Photos -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        🏗️ صور أثناء التنفيذ
+        <span class="upload-badge" id="badge-during">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-during" ondragover="handleDragOver(event,'during')" ondragleave="handleDragLeave(event,'during')" ondrop="handleDrop(event,'during')">
+        <input type="file" id="file-during" accept="image/*" multiple onchange="handleFileSelect(this,'during')">
+        <span class="drop-icon">⚙️</span>
+        <div class="drop-title">صور الموقع خلال مراحل التنفيذ</div>
+        <div class="drop-hint">اسحب الصور هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">JPG</span>
+          <span class="format-tag">PNG</span>
+          <span class="format-tag">WEBP</span>
+          <span class="format-tag">HEIC</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-during"></div>
+    </div>
+
+    <!-- CATEGORY 3: After Photos -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        🏛️ صور ما بعد الإنجاز
+        <span class="upload-badge" id="badge-after">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-after" ondragover="handleDragOver(event,'after')" ondragleave="handleDragLeave(event,'after')" ondrop="handleDrop(event,'after')">
+        <input type="file" id="file-after" accept="image/*" multiple onchange="handleFileSelect(this,'after')">
+        <span class="drop-icon">🏛️</span>
+        <div class="drop-title">صور المشروع بعد الاكتمال</div>
+        <div class="drop-hint">اسحب الصور هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">JPG</span>
+          <span class="format-tag">PNG</span>
+          <span class="format-tag">WEBP</span>
+          <span class="format-tag">HEIC</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-after"></div>
+    </div>
+
+    <!-- CATEGORY 4: Project Documents -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        📄 مستندات المشروع
+        <span class="upload-badge" id="badge-docs">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-docs" ondragover="handleDragOver(event,'docs')" ondragleave="handleDragLeave(event,'docs')" ondrop="handleDrop(event,'docs')">
+        <input type="file" id="file-docs" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx" multiple onchange="handleFileSelect(this,'docs')">
+        <span class="drop-icon">📂</span>
+        <div class="drop-title">التقارير والمستندات والعقود</div>
+        <div class="drop-hint">اسحب الملفات هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">PDF</span>
+          <span class="format-tag">DOC</span>
+          <span class="format-tag">DOCX</span>
+          <span class="format-tag">XLS</span>
+          <span class="format-tag">XLSX</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-docs"></div>
+    </div>
+
+    <!-- CATEGORY 5: Beneficiary Videos -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        🎥 مقاطع فيديو وشهادات المستفيدين
+        <span class="upload-badge" id="badge-videos">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-videos" ondragover="handleDragOver(event,'videos')" ondragleave="handleDragLeave(event,'videos')" ondrop="handleDrop(event,'videos')">
+        <input type="file" id="file-videos" accept="video/*" multiple onchange="handleFileSelect(this,'videos')">
+        <span class="drop-icon">🎬</span>
+        <div class="drop-title">شهادات المستفيدين ومقاطع ميدانية</div>
+        <div class="drop-hint">اسحب مقاطع الفيديو هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">MP4</span>
+          <span class="format-tag">MOV</span>
+          <span class="format-tag">AVI</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-videos"></div>
+    </div>
+
+    <!-- CATEGORY 6: Financial Docs -->
+    <div class="upload-category">
+      <div class="upload-category-title">
+        💰 الوثائق المالية والفواتير
+        <span class="upload-badge" id="badge-finance">0 ملف</span>
+      </div>
+      <div class="drop-zone" id="dz-finance" ondragover="handleDragOver(event,'finance')" ondragleave="handleDragLeave(event,'finance')" ondrop="handleDrop(event,'finance')">
+        <input type="file" id="file-finance" accept=".pdf,.jpg,.jpeg,.png,.xls,.xlsx" multiple onchange="handleFileSelect(this,'finance')">
+        <span class="drop-icon">🧾</span>
+        <div class="drop-title">الفواتير وكشوفات المصروفات والتقارير المالية</div>
+        <div class="drop-hint">اسحب الملفات هنا أو انقر للاختيار</div>
+        <div class="drop-formats">
+          <span class="format-tag">PDF</span>
+          <span class="format-tag">JPG</span>
+          <span class="format-tag">XLS</span>
+          <span class="format-tag">XLSX</span>
+        </div>
+      </div>
+      <div class="files-grid" id="grid-finance"></div>
+    </div>
+
+    <hr class="section-sep">
+    <div class="btn-group" style="justify-content:flex-end">
+      <button class="btn btn-secondary" onclick="clearAllUploads()">
+        🗑️ مسح جميع الملفات
+      </button>
+      <button class="btn btn-primary" onclick="exportUploadList()">
+        📥 تصدير قائمة الملفات
+      </button>
+    </div>
+  </div>
+
+</div><!-- end tab-uploads -->
+
+<!-- ============================================================ -->
+<!-- TAB 3: PROJECTS REGISTRY -->
+<!-- ============================================================ -->
+<div id="tab-registry" class="page-section">
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🗂</div>
+      <div>
+        <div class="section-title">سجل المشاريع المحفوظة</div>
+        <div class="section-desc">جميع المشاريع المُدخلة في هذه الجلسة</div>
+      </div>
+    </div>
+    <div id="registry-empty" style="text-align:center;padding:var(--space-16);color:var(--color-text-muted)">
+      <div style="font-size:3rem;margin-bottom:var(--space-4)">📭</div>
+      <div style="font-size:var(--text-base);font-weight:600;margin-bottom:var(--space-2);color:var(--color-text)">لا توجد مشاريع بعد</div>
+      <div style="font-size:var(--text-sm)">احفظ مشروعاً من تبويب نموذج التقييم لتظهر هنا</div>
+    </div>
+    <div id="registry-list" style="display:none">
+      <table style="width:100%;border-collapse:collapse;font-size:var(--text-sm)">
+        <thead>
+          <tr style="background:var(--color-surface-offset);border-bottom:2px solid var(--color-border)">
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">#</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">اسم المشروع</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">الدولة</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">النوع</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">التصنيف</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">الدرجة</th>
+            <th style="padding:var(--space-3);text-align:right;font-weight:600">إجراء</th>
+          </tr>
+        </thead>
+        <tbody id="registry-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 4: WATER SURVEY -->
+<!-- ============================================================ -->
+<div id="tab-water" class="page-section">
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-blue">💧</div>
+      <div>
+        <div class="section-title">استبيان مشاريع المياه والآبار</div>
+        <div class="section-desc">نموذج متخصص لتقييم مشاريع المياه</div>
+      </div>
+    </div>
+    <div class="form-grid cols-2">
+      <div class="field">
+        <label class="field-label" for="well-depth">عمق البئر (م)</label>
+        <input id="well-depth" class="form-input" type="number" placeholder="0">
+      </div>
+      <div class="field">
+        <label class="field-label" for="well-output">معدل التدفق (لتر/ساعة)</label>
+        <input id="well-output" class="form-input" type="number" placeholder="0">
+      </div>
+      <div class="field">
+        <label class="field-label" for="well-quality">جودة المياه</label>
+        <select id="well-quality" class="form-select">
+          <option>-- اختر --</option>
+          <option>ممتازة — تتوافق مع معايير WHO</option>
+          <option>جيدة — تتوافق مع المعايير المحلية</option>
+          <option>متوسطة — تحتاج معالجة بسيطة</option>
+          <option>ضعيفة — تحتاج معالجة متقدمة</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="well-pump">نوع الضخ</label>
+        <select id="well-pump" class="form-select">
+          <option>-- اختر --</option>
+          <option>طاقة شمسية</option>
+          <option>كهربائي</option>
+          <option>يدوي</option>
+          <option>ديزل</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="well-beneficiaries">عدد القرى المستفيدة</label>
+        <input id="well-beneficiaries" class="form-input" type="number" placeholder="0">
+      </div>
+      <div class="field">
+        <label class="field-label" for="well-households">عدد الأسر المستفيدة</label>
+        <input id="well-households" class="form-input" type="number" placeholder="0">
+      </div>
+    </div>
+    <div class="field" style="margin-top:var(--space-5)">
+      <label class="field-label" for="well-notes">ملاحظات تقنية</label>
+      <textarea id="well-notes" class="form-textarea" placeholder="أي ملاحظات تقنية أو تشغيلية..."></textarea>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TAB 5: GUIDE -->
+<!-- ============================================================ -->
+<div id="tab-guide" class="page-section">
+  <div class="form-card">
+    <div class="section-header">
+      <div class="section-icon icon-green">📖</div>
+      <div>
+        <div class="section-title">دليل استخدام النظام</div>
+        <div class="section-desc">إرشادات وتوضيحات للمستخدمين</div>
+      </div>
+    </div>
+    <div class="docs-block">
+      <h3>🎯 معايير OECD-DAC للتقييم</h3>
+      <ul>
+        <li><strong>الملاءمة:</strong> هل يتوافق المشروع مع احتياجات المجتمع والأولويات الوطنية؟</li>
+        <li><strong>الفعالية:</strong> هل تحققت أهداف المشروع بالمستوى المطلوب؟</li>
+        <li><strong>الكفاءة:</strong> هل تمت الاستفادة المثلى من الموارد البشرية والمالية؟</li>
+        <li><strong>الأثر:</strong> ما التغيرات الإيجابية التي أحدثها المشروع على المدى البعيد؟</li>
+        <li><strong>الاستدامة:</strong> هل يمكن للمجتمع الاستمرار في الاستفادة بعد انتهاء الدعم؟</li>
+        <li><strong>التنسيق:</strong> جودة التعاون مع الشركاء والجهات المعنية.</li>
+      </ul>
+    </div>
+    <div class="docs-block">
+      <h3>📸 إرشادات رفع الملفات</h3>
+      <ul>
+        <li>يدعم النظام رفع الصور بصيغ JPG و PNG و WEBP و HEIC</li>
+        <li>يدعم المستندات بصيغ PDF و Word و Excel و PowerPoint</li>
+        <li>صنّف الصور إلى: قبل التنفيذ — أثناء التنفيذ — بعد الإنجاز</li>
+        <li>أرفق الفواتير والوثائق المالية في قسم الوثائق المالية</li>
+        <li>يمكن رفع مقاطع الفيديو وشهادات المستفيدين بصيغ MP4 و MOV</li>
+      </ul>
+    </div>
+    <div class="docs-block">
+      <h3>💾 الحفظ والتصدير</h3>
+      <p>يحفظ النظام البيانات مؤقتاً في الجلسة الحالية. لحفظ دائم، استخدم زر "حفظ وتسجيل المشروع" لإضافة المشروع إلى السجل. يمكنك تصدير قائمة الملفات المرفوعة.</p>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  © 2026 جمعية الشيخ عبد الله النوري الخيرية — نظام تقييم المشاريع وقياس الأثر | الإصدار 3.0
+</footer>
+
+<script>
+// ===== STATE =====
+const ratings = {};
+const uploadedFiles = { before:[], during:[], after:[], docs:[], videos:[], finance:[] };
+const projects = [];
+
+// ===== DARK MODE =====
+(function(){
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light';
+  r.setAttribute('data-theme', d);
+  if(t) t.addEventListener('click', () => {
+    d = d === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', d);
+  });
+})();
+
+// ===== TABS =====
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tabId).classList.add('active');
+}
+
+// ===== RATINGS =====
+function setRating(criterion, value) {
+  ratings[criterion] = value;
+  const container = document.querySelector(`[data-criterion="${criterion}"]`);
+  container.querySelectorAll('.star-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', i < value);
+  });
+  document.getElementById(`score-${criterion}`).textContent = value;
+}
+
+function calculateScore() {
+  const keys = ['relevance','effectiveness','efficiency','impact','sustainability','coordination'];
+  const labels = { relevance:'الملاءمة', effectiveness:'الفعالية', efficiency:'الكفاءة', impact:'الأثر', sustainability:'الاستدامة', coordination:'التنسيق' };
+  const filled = keys.filter(k => ratings[k]);
+  if (filled.length === 0) {
+    alert('يرجى تقييم المعايير أولاً');
+    return;
+  }
+  const avg = filled.reduce((s, k) => s + ratings[k], 0) / filled.length;
+  const score = avg.toFixed(2);
+  const grade = avg >= 4.5 ? 'ممتاز جداً 🏆' : avg >= 3.5 ? 'جيد جداً ✨' : avg >= 2.5 ? 'جيد 👍' : avg >= 1.5 ? 'مقبول ⚠️' : 'ضعيف ❌';
+
+  document.getElementById('total-score').textContent = score;
+  document.getElementById('grade-text').textContent = grade;
+
+  const breakdown = document.getElementById('score-breakdown');
+  breakdown.innerHTML = keys.map(k => `
+    <div class="score-item">
+      <div class="score-item-val">${ratings[k] || '—'}</div>
+      <div class="score-item-lbl">${labels[k]}</div>
+    </div>
+  `).join('');
+
+  document.getElementById('score-result').style.display = 'block';
+  document.getElementById('score-result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ===== FILE UPLOAD =====
+function handleDragOver(e, category) {
+  e.preventDefault();
+  document.getElementById(`dz-${category}`).classList.add('dragover');
+}
+function handleDragLeave(e, category) {
+  document.getElementById(`dz-${category}`).classList.remove('dragover');
+}
+function handleDrop(e, category) {
+  e.preventDefault();
+  document.getElementById(`dz-${category}`).classList.remove('dragover');
+  processFiles(e.dataTransfer.files, category);
+}
+function handleFileSelect(input, category) {
+  processFiles(input.files, category);
+}
+
+function processFiles(fileList, category) {
+  Array.from(fileList).forEach(file => {
+    uploadedFiles[category].push(file);
+    addFileToGrid(file, category, uploadedFiles[category].length - 1);
+  });
+  updateBadge(category);
+  updateStats();
+}
+
+function addFileToGrid(file, category, index) {
+  const grid = document.getElementById(`grid-${category}`);
+  const item = document.createElement('div');
+  item.className = 'file-item';
+  item.id = `file-item-${category}-${index}`;
+
+  const isImage = file.type.startsWith('image/');
+  const isVideo = file.type.startsWith('video/');
+  const sizeStr = file.size < 1024*1024 ? (file.size/1024).toFixed(1)+' KB' : (file.size/1024/1024).toFixed(1)+' MB';
+  const emoji = isImage ? '' : isVideo ? '🎬' : file.name.endsWith('.pdf') ? '📑' : file.name.match(/xlsx?/i) ? '📊' : file.name.match(/docx?/i) ? '📝' : '📄';
+
+  let previewHtml = '';
+  if (isImage) {
+    const url = URL.createObjectURL(file);
+    previewHtml = `<img class="file-preview" src="${url}" alt="${file.name}" loading="lazy" width="140" height="105">`;
+  } else {
+    previewHtml = `<div class="file-preview-icon">${emoji}</div>`;
+  }
+
+  item.innerHTML = `
+    ${previewHtml}
+    <div class="file-name" title="${file.name}">${file.name}</div>
+    <div class="file-size">${sizeStr}</div>
+    <button class="file-remove" onclick="removeFile('${category}',${index})" aria-label="حذف الملف">×</button>
+  `;
+  grid.appendChild(item);
+}
+
+function removeFile(category, index) {
+  uploadedFiles[category][index] = null;
+  const item = document.getElementById(`file-item-${category}-${index}`);
+  if (item) item.remove();
+  updateBadge(category);
+  updateStats();
+}
+
+function updateBadge(category) {
+  const count = uploadedFiles[category].filter(f => f !== null).length;
+  document.getElementById(`badge-${category}`).textContent = `${count} ملف`;
+}
+
+function updateStats() {
+  let totalFiles = 0, images = 0, docs = 0, totalSize = 0;
+  Object.values(uploadedFiles).forEach(arr => {
+    arr.forEach(f => {
+      if (!f) return;
+      totalFiles++;
+      totalSize += f.size;
+      if (f.type.startsWith('image/')) images++;
+      else docs++;
+    });
+  });
+  document.getElementById('stat-total-files').textContent = totalFiles;
+  document.getElementById('stat-images').textContent = images;
+  document.getElementById('stat-docs').textContent = docs;
+  const sz = totalSize < 1024*1024 ? (totalSize/1024).toFixed(1)+' KB' : (totalSize/1024/1024).toFixed(1)+' MB';
+  document.getElementById('stat-size').textContent = sz;
+}
+
+function clearAllUploads() {
+  if (!confirm('هل تريد حذف جميع الملفات المرفوعة؟')) return;
+  Object.keys(uploadedFiles).forEach(cat => {
+    uploadedFiles[cat] = [];
+    document.getElementById(`grid-${cat}`).innerHTML = '';
+    updateBadge(cat);
+  });
+  updateStats();
+}
+
+function exportUploadList() {
+  let csv = 'الفئة,اسم الملف,الحجم,النوع\n';
+  const catLabels = { before:'قبل التنفيذ', during:'أثناء التنفيذ', after:'بعد الإنجاز', docs:'مستندات', videos:'فيديو', finance:'مالية' };
+  Object.entries(uploadedFiles).forEach(([cat, files]) => {
+    files.forEach(f => {
+      if (!f) return;
+      csv += `"${catLabels[cat]}","${f.name}","${(f.size/1024).toFixed(1)} KB","${f.type}"\n`;
+    });
+  });
+  const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'قائمة_ملفات_المشروع.csv';
+  a.click();
+}
+
+// ===== SAVE / RESET =====
+function saveProject() {
+  const name = document.getElementById('proj-name').value.trim();
+  if (!name) { alert('يرجى إدخال اسم المشروع'); return; }
+
+  const typeMap = { water:'مياه', mosque:'مسجد', school:'مدرسة', health:'صحة', livelihood:'سبل عيش', other:'أخرى', '':'—' };
+  const typeVal = document.getElementById('proj-type').value;
+
+  const avg = Object.keys(ratings).length ? (Object.values(ratings).reduce((a,b)=>a+b,0)/Object.keys(ratings).length).toFixed(1) : '—';
+
+  const project = {
+    id: Date.now(),
+    name,
+    country: document.getElementById('proj-country').value || '—',
+    type: typeMap[typeVal] || '—',
+    grade: document.getElementById('overall-grade').value,
+    score: avg,
+    files: Object.values(uploadedFiles).flat().filter(Boolean).length
+  };
+  projects.push(project);
+  renderRegistry();
+
+  const alert = document.getElementById('alert-save');
+  alert.classList.add('show');
+  setTimeout(() => alert.classList.remove('show'), 3000);
+}
+
+function resetForm() {
+  if (!confirm('هل تريد إعادة تعيين النموذج؟')) return;
+  document.querySelectorAll('.form-input, .form-textarea').forEach(el => el.value = '');
+  document.querySelectorAll('.form-select').forEach(el => el.selectedIndex = 0);
+  Object.keys(ratings).forEach(k => delete ratings[k]);
+  document.querySelectorAll('.star-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.rating-score').forEach(el => el.textContent = '—');
+  document.getElementById('score-result').style.display = 'none';
+  const a = document.getElementById('alert-reset');
+  a.classList.add('show');
+  setTimeout(() => a.classList.remove('show'), 3000);
+}
+
+function renderRegistry() {
+  const empty = document.getElementById('registry-empty');
+  const list = document.getElementById('registry-list');
+  const tbody = document.getElementById('registry-tbody');
+
+  if (projects.length === 0) {
+    empty.style.display = 'block'; list.style.display = 'none'; return;
+  }
+  empty.style.display = 'none'; list.style.display = 'block';
+
+  tbody.innerHTML = projects.map((p, i) => `
+    <tr style="border-bottom:1px solid var(--color-divider);transition:background var(--transition)" onmouseenter="this.style.background='var(--color-surface-offset)'" onmouseleave="this.style.background=''">
+      <td style="padding:var(--space-3);color:var(--color-text-muted)">${i+1}</td>
+      <td style="padding:var(--space-3);font-weight:600">${p.name}</td>
+      <td style="padding:var(--space-3)">${p.country}</td>
+      <td style="padding:var(--space-3)">${p.type}</td>
+      <td style="padding:var(--space-3)"><span style="background:var(--color-gold-highlight);color:var(--color-gold);padding:2px 8px;border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700">${p.grade}</span></td>
+      <td style="padding:var(--space-3);font-family:var(--font-mono);font-weight:700;color:var(--color-primary)">${p.score}</td>
+      <td style="padding:var(--space-3)"><button class="btn btn-secondary" style="font-size:var(--text-xs)" onclick="deleteProject(${p.id})">🗑 حذف</button></td>
+    </tr>
+  `).join('');
+}
+
+function deleteProject(id) {
+  const idx = projects.findIndex(p => p.id === id);
+  if (idx > -1) projects.splice(idx, 1);
+  renderRegistry();
+}
+
+// Set default date
+document.getElementById('proj-date').value = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
