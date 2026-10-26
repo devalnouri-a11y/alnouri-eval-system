@@ -18,13 +18,26 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Validate and stage public files
+      - name: Stage and validate branded form
+        shell: python
         run: |
-          test -s index.html
-          test -s evaluation-form.html
-          mkdir -p _site
-          cp index.html evaluation-form.html _site/
-          touch _site/.nojekyll
+          from pathlib import Path
+          import re, base64
+          logo = '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'
+          assert base64.b64decode(logo)[:4] == b'RIFF'
+          original = Path('evaluation-form.html').read_text(encoding='utf-8')
+          image = '<img class="alnouri-official-logo" src="data:image/webp;base64,' + logo + '" alt="جمعية الشيخ عبد الله النوري الخيرية" width="200" height="63">'
+          html, count = re.subn(r'<svg class="logo-svg"[\s\S]*?</svg>', lambda m: image, original, count=1)
+          assert count == 1, 'Expected original logo placeholder'
+          css = '<style>.alnouri-official-logo{display:block;width:200px;max-width:100%;height:auto;background:white;padding:6px;border-radius:8px;object-fit:contain;flex-shrink:0}.header-inner,.logo-group{flex-wrap:wrap}@media(max-width:600px){.logo-group{width:100%}.header-actions{margin-inline-start:auto}}</style>'
+          html = html.replace('</head>', css + '</head>', 1)
+          assert re.findall(r'<script\b[\s\S]*?</script>', original) == re.findall(r'<script\b[\s\S]*?</script>', html)
+          assert 'id="proj-name"' in html
+          target = Path('_site')
+          target.mkdir(exist_ok=True)
+          (target / 'evaluation-form.html').write_text(html, encoding='utf-8')
+          (target / 'index.html').write_bytes(Path('index.html').read_bytes())
+          (target / '.nojekyll').touch()
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
